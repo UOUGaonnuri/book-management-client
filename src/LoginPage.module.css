@@ -1,0 +1,30 @@
+body{
+    margin: 0;
+    background-color: #FFFFF2;
+}
+.loginform{
+    border: 0;
+    margin: 0 auto;
+    width: 500px;
+    background-color: #72723b;
+    border-radius: 5px;
+    padding: 20px;
+}
+.textField{
+    font-size: 14px;
+    border: none;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    padding: 10px;
+    width: 90%;
+}
+.submitBtn{
+    color: #EEEFF1;
+    font-size: 14px;
+    background-color: #C1BDB1;
+    border: none;
+    padding: 10px;
+    width: 90%;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
