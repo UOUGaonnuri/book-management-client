@@ -34,9 +34,6 @@ export const UserProvider = (props: PropsType) => {
 
     const login = ( loginUser: userType) => {
         setUser(loginUser);
-        localStorage.setItem("userName", loginUser.userName);
-        localStorage.setItem("accessToken", loginUser.accessToken);
-        localStorage.setItem("refreshToken", loginUser.refreshToken);
     }
 
     const logout = () => {
@@ -45,9 +42,6 @@ export const UserProvider = (props: PropsType) => {
             accessToken: "",
             refreshToken: "",
         });
-        localStorage.removeItem("userName");
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
     };
 
     const values : userContextValueType = {

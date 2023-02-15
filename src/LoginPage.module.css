@@ -1,12 +1,12 @@
 body{
     margin: 0;
-    background-color: #FFFFF2;
+    background-color: #FAEAB1;
 }
 .loginform{
     border: 0;
     margin: 0 auto;
     width: 500px;
-    background-color: #72723b;
+    background-color: #E5BA73;
     border-radius: 5px;
     padding: 20px;
 }
@@ -21,7 +21,7 @@ body{
 .submitBtn{
     color: #EEEFF1;
     font-size: 14px;
-    background-color: #C1BDB1;
+    background-color: #C58940;
     border: none;
     padding: 10px;
     width: 90%;
