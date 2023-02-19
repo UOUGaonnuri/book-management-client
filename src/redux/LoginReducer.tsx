@@ -21,6 +21,7 @@ const LoginReducer = createReducer(initialState, (builder) => {
             state.authenticated = true;
             state.accessToken = action.payload.accessToken;
             state.expireTime = new Date().getTime() + TOKEN_TIME_OUT;
+            console.log(state.accessToken);
         })
         .addCase(LoginActionCreater.deleteToken, (state, action) => {
             state.authenticated = false;

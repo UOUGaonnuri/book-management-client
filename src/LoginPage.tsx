@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import LoginStyle from './LoginPage.module.css'
-import { LoginStateType } from './redux/LoginReducer'
-import { setRefreshToken } from './storage/RefreshToken'
+import { setRefreshToken, getCookieToken } from './storage/RefreshToken'
 import { AnyAction, Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import LoginActionCreater from './redux/LoginActionCreater'
@@ -22,7 +21,6 @@ type userType = {
 }
 
 type PropsType = {
-  LoginState: LoginStateType;
   setToken: (accessToken: string) => void;
 }
 
@@ -54,6 +52,7 @@ const LoginPage = (props: PropsType) => {
         }
         props.setToken(uT.accessToken);
         setRefreshToken(uT.refreshToken);
+        console.log(`# RefreshTocken ${getCookieToken()}`);
         goReg('/');
         // axios.post("login",body)
         // .then((res)=>{
@@ -86,14 +85,8 @@ const LoginPage = (props: PropsType) => {
   )
 }
 
-const mapStateToProps = (state: LoginStateType) => ({
-  authenticated: state.authenticated,
-  accessToken: state.accessToken,
-  expireTime: state.expireTime
-});
-
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
   setToken: (accessToken: string) => dispatch(LoginActionCreater.setToken({ accessToken })),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage)
+export default connect(null, mapDispatchToProps)(LoginPage)
