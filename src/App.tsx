@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import LoginPage from './LoginPage'
-import MainPage from './MainPage'
-import RegisterPage from './RegisterPage'
-import NotFound from './NotFound'
+import LoginPage from './pages/LoginPage'
+import MainPage from './pages/MainPage'
+import RegisterPage from './pages/RegisterPage'
+import NotFound from './pages/NotFound'
 import './App.css'
 
 const App = () =>{
