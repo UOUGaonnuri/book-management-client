@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import LoginStyle from './LoginPage.module.css'
-import { setRefreshToken, getCookieToken } from './storage/RefreshToken'
+import { setRefreshToken, getCookieToken } from '../storage/RefreshToken'
 import { AnyAction, Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import LoginActionCreater from './redux/LoginActionCreater'
+import LoginActionCreater from '../redux/LoginActionCreater'
 
 
 const userList = [
