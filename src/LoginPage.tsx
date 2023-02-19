@@ -1,8 +1,11 @@
-import React, { useContext, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import UserContext, {userType} from './UserContext';
 import LoginStyle from './LoginPage.module.css'
+import { setRefreshToken, getCookieToken } from './storage/RefreshToken'
+import { AnyAction, Dispatch } from 'redux'
+import { connect } from 'react-redux'
+import LoginActionCreater from './redux/LoginActionCreater'
 
 
 const userList = [
@@ -11,11 +14,20 @@ const userList = [
   { id: "321", pw: "321", userName: "park"},
 ]
 
-const LoginPage = () => {
+type userType = {
+  userName: string;
+  accessToken: string;
+  refreshToken: string;
+}
+
+type PropsType = {
+  setToken: (accessToken: string) => void;
+}
+
+const LoginPage = (props: PropsType) => {
     const [id, setId] = useState<string>("");
     const [pw, setPw] = useState<string>("");
     const goReg = useNavigate();
-    const values = useContext(UserContext);
     const loginFunc = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       if (!id) {
@@ -38,7 +50,9 @@ const LoginPage = () => {
           accessToken: pw,
           refreshToken: pw,
         }
-        values?.actions.login(uT);
+        props.setToken(uT.accessToken);
+        setRefreshToken(uT.refreshToken);
+        console.log(`# RefreshTocken ${getCookieToken()}`);
         goReg('/');
         // axios.post("login",body)
         // .then((res)=>{
@@ -71,4 +85,8 @@ const LoginPage = () => {
   )
 }
 
-export default LoginPage
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
+  setToken: (accessToken: string) => dispatch(LoginActionCreater.setToken({ accessToken })),
+});
+
+export default connect(null, mapDispatchToProps)(LoginPage)
