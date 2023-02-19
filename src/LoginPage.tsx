@@ -68,7 +68,7 @@ const LoginPage = (props: PropsType) => {
     }
 
   return (
-    <div className={LoginStyle.body}>
+    <div>
       <div className={LoginStyle.loginform}>
         <form onSubmit={loginFunc}>
           <h1>로그인 페이지</h1>
