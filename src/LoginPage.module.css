@@ -11,7 +11,9 @@ body{
     padding: 20px;
 }
 .textField{
+    text-align: left;
     font-size: 14px;
+    font-weight: 600;
     border: none;
     margin-bottom: 10px;
     border-radius: 5px;
@@ -27,4 +29,45 @@ body{
     width: 90%;
     margin-bottom: 10px;
     border-radius: 5px;
+}
+.checkBtn{
+    color: #EEEFF1;
+    font-size: 14px;
+    background-color: #C58940;
+    border: none;
+    padding: 10px;
+    width: 25%;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+.registform{
+    text-align: left;
+    border: 0;
+    margin: 0 auto;
+    width: 500px;
+    background-color: #E5BA73;
+    border-radius: 5px;
+    padding: 20px;
+}
+.regTitle{
+    text-align: center;
+}
+.regInput{
+    text-align: left;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    padding: 10px;
+    width: 60%;
+}
+.compo{
+    text-align:center;
+}
+.ckErrorMsg{
+    color: red;
+}
+.ckGoodMsg{
+    color: blue;
 }

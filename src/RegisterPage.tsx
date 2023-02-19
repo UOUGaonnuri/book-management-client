@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React,{ useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import LoginStyle from './LoginPage.module.css'
 
-type Props = {}
 
-const RegisterPage = (props: Props) => {
+const RegisterPage = () => {
     const [id, setId] = useState<string>("");
     const [pw, setPw] = useState<string>("");
     const [ckPw, setCkPw] = useState<string>("");
@@ -98,34 +98,31 @@ const RegisterPage = (props: Props) => {
     }
 
     return (
-        <div>
+        <div className={LoginStyle.registform}>
+            <h1 className={LoginStyle.regTitle}>회원가입</h1>
             <form onSubmit={registFunc}>
-                <span>아이디</span>
-                <br />
-                <input type='text' value={id} onChange={ckIdChg} />&nbsp;&nbsp;&nbsp;
-                <span onClick={ckIdBtn}>아이디 중복 확인</span>
-                <br />
+                <div className={LoginStyle.compo}>
+                    <input className={LoginStyle.regInput} type='text' value={id} onChange={ckIdChg} placeholder='아이디' />&nbsp;&nbsp;&nbsp;
+                    <button className={LoginStyle.checkBtn} onClick={ckIdBtn}>아이디 중복 확인</button>
+                </div>
                 <span>{ckIdMsg}</span>
                 <br />
-                <span>비밀번호</span>
-                <br />
-                <input type='password' value={pw} onChange={(e)=>setPw(e.target.value)} />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input className={LoginStyle.regInput} type='password' value={pw} onChange={(e)=>setPw(e.target.value)} placeholder='비밀번호'/>
                 <br />
                 <br />
-                <span>비밀번호 확인</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input className={LoginStyle.regInput} type='password' value={ckPw} onChange={(e)=>setCkPw(e.target.value)} placeholder='비밀번호 확인'/>
                 <br />
-                <input type='password' value={ckPw} onChange={(e)=>setCkPw(e.target.value)} />
+                <span className={(!pw||!ckPw)?"":((ckPw===pw)?LoginStyle.ckGoodMsg:LoginStyle.ckErrorMsg)}>{(!pw||!ckPw)?"":((ckPw===pw)?"비밀번호가 일치합니다":"비밀번호가 일치하지 않습니다")}</span>
                 <br />
-                <span>{(!pw||!ckPw)?"":((ckPw===pw)?"비밀번호가 일치합니다":"비밀번호가 일치하지 않습니다")}</span>
-                <br />
-                <span>이메일</span>
-                <br />
-                <input type='email' value={email} onChange={ckEmailChg} />&nbsp;&nbsp;&nbsp;
-                <span onClick={ckEmailBtn}>이메일 중복 확인</span>
+                <div className={LoginStyle.compo}>
+                    <input className={LoginStyle.regInput} type='email' value={email} onChange={ckEmailChg}  placeholder='이메일'/>&nbsp;&nbsp;&nbsp;
+                    <button className={LoginStyle.checkBtn} onClick={ckEmailBtn}>이메일 중복 확인</button>
+                </div>
                 <br />
                 <span>{ckEmailMsg}</span>
-                <br />
-                <button type='submit'>회원 가입</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button className={LoginStyle.submitBtn} type='submit'>회원 가입</button>
             </form>
         </div>
     )
