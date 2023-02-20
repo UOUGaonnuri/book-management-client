@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import LoginStyle from '../LoginPage.module.css'
+import LoginStyle from './style/LoginPage.module.css'
 import { setRefreshToken, getCookieToken } from '../storage/RefreshToken'
 import { AnyAction, Dispatch } from 'redux'
 import { connect } from 'react-redux'
