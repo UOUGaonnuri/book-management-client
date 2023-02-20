@@ -2,33 +2,20 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import LoginStyle from './style/LoginPage.module.css'
-import { setRefreshToken, getCookieToken } from '../storage/RefreshToken'
 import { AnyAction, Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import LoginActionCreater from '../redux/LoginActionCreater'
 
-
-const userList = [
-  { id: "123", pw: "123", userName: "lee"},
-  { id: "132", pw: "132", userName: "kin"},
-  { id: "321", pw: "321", userName: "park"},
-]
-
-type userType = {
-  userName: string;
-  accessToken: string;
-  refreshToken: string;
-}
-
 type PropsType = {
-  setToken: (accessToken: string) => void;
+  setToken: (userName:string, accessToken: string) => void;
 }
 
 const LoginPage = (props: PropsType) => {
     const [id, setId] = useState<string>("");
     const [pw, setPw] = useState<string>("");
     const goReg = useNavigate();
-    const loginFunc = (e: React.FormEvent<HTMLFormElement>) => {
+    
+    const loginFunc = async(e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       if (!id) {
         return alert("ID를 입력하세요.");
@@ -41,29 +28,25 @@ const LoginPage = (props: PropsType) => {
           id: id,
           pw: pw,
         };
-        const resultLogin = userList.filter((index) => index.id===id && index.pw === pw);
-        if(resultLogin===null){
-          return alert("아이디 혹은 비밀번호가 틀렸습니다.");
+        try{
+          let data = {id: id, pw: pw};
+          const res = await axios.post(
+            "/api/login",
+            data
+          );
+          if(res.status==200){
+            props.setToken(res.data.userName, res.data.accessToken);
+            goReg('/');
+          }
+          else{
+            alert(res.data);
+            setId("");
+            setPw("");
+          }
         }
-        let uT: userType = {
-          userName: resultLogin[0].userName,
-          accessToken: pw,
-          refreshToken: pw,
+        catch(e){
+          console.log(e);
         }
-        props.setToken(uT.accessToken);
-        setRefreshToken(uT.refreshToken);
-        console.log(`# RefreshTocken ${getCookieToken()}`);
-        goReg('/');
-        // axios.post("login",body)
-        // .then((res)=>{
-        //   if(res.status===200){ // 로그인 성공시
-        //     let uT: userType = {
-        //       userName: res.data.username,
-        //       accessToken: res.data.accessToken,
-        //       refreshToken: res.data.accessToken,
-        //     }
-        //   }
-        // })
       }
     }
 
@@ -86,7 +69,7 @@ const LoginPage = (props: PropsType) => {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
-  setToken: (accessToken: string) => dispatch(LoginActionCreater.setToken({ accessToken })),
+  setToken: (userName:string, accessToken: string) => dispatch(LoginActionCreater.setToken({userName, accessToken})),
 });
 
 export default connect(null, mapDispatchToProps)(LoginPage)

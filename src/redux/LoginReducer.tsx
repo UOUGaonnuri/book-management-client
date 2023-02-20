@@ -1,18 +1,16 @@
 import {createReducer} from '@reduxjs/toolkit'
 import LoginActionCreater from './LoginActionCreater'
 
-export const TOKEN_TIME_OUT = 600*1000;
-
 export type LoginStateType = {
     authenticated: boolean;
     accessToken: string|null;
-    expireTime: number|null;
+    userName: string|null;
 };
 
 const initialState: LoginStateType = {
     authenticated: false,
     accessToken: null,
-    expireTime: null
+    userName: null
 };
 
 const LoginReducer = createReducer(initialState, (builder) => {
@@ -20,13 +18,12 @@ const LoginReducer = createReducer(initialState, (builder) => {
         .addCase(LoginActionCreater.setToken, (state, action) => {
             state.authenticated = true;
             state.accessToken = action.payload.accessToken;
-            state.expireTime = new Date().getTime() + TOKEN_TIME_OUT;
-            console.log(state.accessToken);
+            state.userName = action.payload.userName;
         })
         .addCase(LoginActionCreater.deleteToken, (state, action) => {
             state.authenticated = false;
             state.accessToken = null;
-            state.expireTime = null;
+            state.userName = null;
         })
         .addDefaultCase((state, action) => state);
 });
