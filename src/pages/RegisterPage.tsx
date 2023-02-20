@@ -23,10 +23,10 @@ const RegisterPage = () => {
 
     const ckIdBtn = () => {
         axios.post('ckId',{
-            id: id,
+            params: {id: id}
         })
         .then((res)=>{
-            if(res.status===100){//중복하는 아이디가 없을 경우
+            if(res.status===200){//중복하는 아이디가 없을 경우
                 setCkIdMsg("사용가능한 아이디입니다.");
                 setCkId(true);
             }
@@ -46,12 +46,12 @@ const RegisterPage = () => {
         setCkEmailMsg("");
     };
 
-    const ckEmailBtn = () => {
-        axios.post('ckEmail',{
-            email: email,
+    const ckEmailBtn = async() => {
+        axios.get('api/ckEmail',{
+            params: {email: email}
         })
         .then((res)=>{
-            if(res.status===100){//중복하는 이메일이 없을 경우
+            if(res.status===200){//중복하는 이메일이 없을 경우
                 setCkEmailMsg("사용가능한 이메일입니다.");
                 setCkEmail(true);
             }
@@ -65,7 +65,7 @@ const RegisterPage = () => {
         })
     };
 
-    const registFunc = (e: React.FormEvent<HTMLFormElement>) => {
+    const registFunc = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!id) return alert("아이디를 적어주세요");
         else if (!pw) return alert("비밀번호를 적어주세요");
@@ -80,21 +80,38 @@ const RegisterPage = () => {
             pw: pw,
             email: email,
         };
-        axios.post('regist',{
-            id,
-            pw,
-            email,
-        })
-        .then((res)=>{
-            if(res.status===100){
+        try{
+            const res = await axios.post(
+                "/api/regist",
+                {
+                    id: id,
+                    pw: pw,
+                    email: email,
+                }
+            )
+            if(res.status===200){
                 const goReg = useNavigate();
                 alert("회원가입 성공");
                 goReg('/member/login');
             }
-        })
-        .catch((e)=>{
-            alert(e);
-        })
+            else{
+                const a: string = ""
+                if(res.data.userName!==undefined){
+                    a.concat("\n"+res.data.userName);
+                }
+                if(res.data.password!==undefined){
+                    a.concat("\n"+res.data.password);
+                }
+                if(res.data.email!==undefined){
+                    a.concat("\n"+res.data.email);
+                }
+                alert(a);
+            }
+        }
+        catch(e){
+            console.log(e);
+            alert("서버통신에 실패하였습니다. 다시 시도해주세요");
+        }
     }
 
     return (
@@ -102,8 +119,8 @@ const RegisterPage = () => {
             <h1 className={LoginStyle.regTitle}>회원가입</h1>
             <form onSubmit={registFunc}>
                 <div className={LoginStyle.compo}>
-                    <input className={LoginStyle.regInput} type='text' value={id} onChange={ckIdChg} placeholder='아이디' />&nbsp;&nbsp;&nbsp;
-                    <button className={LoginStyle.checkBtn} onClick={ckIdBtn}>아이디 중복 확인</button>
+                    <input className={LoginStyle.regInput} type='text' value={id} onChange={ckIdChg} placeholder='아이디'/>&nbsp;&nbsp;&nbsp;
+                    <button className={LoginStyle.checkBtn} onClick={ckIdBtn} >아이디 중복 확인</button>
                 </div>
                 <span>{ckIdMsg}</span>
                 <br />

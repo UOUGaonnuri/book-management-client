@@ -1,0 +1,21 @@
+{
+  "login": [
+    {
+      "status": 200,
+      "data": {
+        "id": "JaeHee",
+        "accessToken": "accessToken"
+      }
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

@@ -31,10 +31,10 @@ const LoginPage = (props: PropsType) => {
         try{
           let data = {id: id, pw: pw};
           const res = await axios.post(
-            "/api/login",
+            "http://localhost:3000/login",
             data
           );
-          if(res.status==200){
+          if(res.status===200){
             props.setToken(res.data.userName, res.data.accessToken);
             goReg('/');
           }
@@ -46,6 +46,9 @@ const LoginPage = (props: PropsType) => {
         }
         catch(e){
           console.log(e);
+          alert("서버통신 안됨")
+          setId("");
+          setPw("");
         }
       }
     }
