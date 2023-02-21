@@ -1,21 +1,35 @@
 {
-  "login": [
-    {
-      "status": 200,
-      "data": {
-        "id": "JaeHee",
-        "accessToken": "accessToken"
-      }
-    }
-  ],
-  "comments": [
+  "login": {
+    "userName": "123",
+    "accessToken": "123",
+    "role": "ROLE_ADMIN"
+  },
+  "ckID": [
     {
       "id": 1,
       "body": "some comment",
       "postId": 1
+    },
+    {
+      "id": 2
+    },
+    {
+      "params": {
+        "id": "sjsjsj"
+      },
+      "id": 3
     }
   ],
-  "profile": {
-    "name": "typicode"
-  }
+  "ckEmail": {
+    "params": {
+      "email": "sja@gmail.com"
+    }
+  },
+  "regist": [
+    {
+      "id": "jdsladks121",
+      "pw": "123",
+      "email": "123@gmail.com"
+    }
+  ]
 }

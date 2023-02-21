@@ -13,6 +13,7 @@ const RegisterPage = () => {
     const [ckEmailMsg, setCkEmailMsg] = useState<string>("");
     const [ckId, setCkId] = useState<boolean>(false);
     const [ckEmail, setCkEmail] = useState<boolean>(false);
+    const goReg = useNavigate();
 
 
     const ckIdChg = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,11 +22,15 @@ const RegisterPage = () => {
         setCkIdMsg("");
     }
 
-    const ckIdBtn = () => {
-        axios.post('ckId',{
-            params: {id: id}
-        })
-        .then((res)=>{
+    const ckIdBtn = async() => {
+        if(id===""){
+            alert("아이디를 적어주세요");
+            return;
+        }
+        try{
+            const res = await axios.get('http://localhost:3000/ckID',{
+                params: {id: id}
+            })
             if(res.status===200){//중복하는 아이디가 없을 경우
                 setCkIdMsg("사용가능한 아이디입니다.");
                 setCkId(true);
@@ -34,10 +39,10 @@ const RegisterPage = () => {
                 setCkIdMsg("이미 존재하는 아이디입니다.");
                 setCkId(false);
             }
-        })
-        .catch((error)=>{
+        }
+        catch(error){
             console.log(error);
-        })
+        }
     }
 
     const ckEmailChg = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,26 +52,29 @@ const RegisterPage = () => {
     };
 
     const ckEmailBtn = async() => {
-        axios.get('api/ckEmail',{
-            params: {email: email}
-        })
-        .then((res)=>{
-            if(res.status===200){//중복하는 이메일이 없을 경우
+        if(email===""){
+            alert("이메일을 적어주세요");
+            return;
+        }
+        try{
+            const res = await axios.get('http://localhost:3000/ckEmail',{
+                params: {email: email}
+            })
+            if(res.status===200){//중복하는 아이디가 없을 경우
                 setCkEmailMsg("사용가능한 이메일입니다.");
                 setCkEmail(true);
             }
             else{
                 setCkEmailMsg("이미 존재하는 이메일입니다.");
-                setCkEmail(false)
+                setCkEmail(false);
             }
-        })
-        .catch((error)=>{
+        }
+        catch(error){
             console.log(error);
-        })
-    };
+        }
+    }
 
-    const registFunc = async(e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const registFunc = async() => {
         if (!id) return alert("아이디를 적어주세요");
         else if (!pw) return alert("비밀번호를 적어주세요");
         else if (!ckPw) return alert("비밀번호 확인을 적어주세요");
@@ -82,7 +90,7 @@ const RegisterPage = () => {
         };
         try{
             const res = await axios.post(
-                "/api/regist",
+                "http://localhost:3000/regist",
                 {
                     id: id,
                     pw: pw,
@@ -90,20 +98,19 @@ const RegisterPage = () => {
                 }
             )
             if(res.status===200){
-                const goReg = useNavigate();
                 alert("회원가입 성공");
                 goReg('/member/login');
             }
             else{
                 const a: string = ""
                 if(res.data.userName!==undefined){
-                    a.concat("\n"+res.data.userName);
+                    a.concat(res.data.userName+"\n");
                 }
                 if(res.data.password!==undefined){
-                    a.concat("\n"+res.data.password);
+                    a.concat(res.data.password+"\n");
                 }
                 if(res.data.email!==undefined){
-                    a.concat("\n"+res.data.email);
+                    a.concat(res.data.email+"\n");
                 }
                 alert(a);
             }
@@ -117,7 +124,7 @@ const RegisterPage = () => {
     return (
         <div className={LoginStyle.registform}>
             <h1 className={LoginStyle.regTitle}>회원가입</h1>
-            <form onSubmit={registFunc}>
+            <div>
                 <div className={LoginStyle.compo}>
                     <input className={LoginStyle.regInput} type='text' value={id} onChange={ckIdChg} placeholder='아이디'/>&nbsp;&nbsp;&nbsp;
                     <button className={LoginStyle.checkBtn} onClick={ckIdBtn} >아이디 중복 확인</button>
@@ -139,8 +146,8 @@ const RegisterPage = () => {
                 <br />
                 <span>{ckEmailMsg}</span>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <button className={LoginStyle.submitBtn} type='submit'>회원 가입</button>
-            </form>
+                <button className={LoginStyle.submitBtn} onClick={registFunc}>회원 가입</button>
+            </div>
         </div>
     )
 }

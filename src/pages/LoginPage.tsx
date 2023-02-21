@@ -36,10 +36,17 @@ const LoginPage = (props: PropsType) => {
           );
           if(res.status===200){
             props.setToken(res.data.userName, res.data.accessToken);
-            goReg('/');
+            if(res.data.role==="ROLE_ADMIN"){
+              goReg('/master');
+            }
+            else if(res.data.role==="ROLE_USER")
+              goReg('/');
+            else{
+              alert("잘못된 유저 정보입니다. 관리자에게 문의해 주세요.");
+            }
           }
           else{
-            alert(res.data);
+            alert("존재하지 않은 아이디입니다.");
             setId("");
             setPw("");
           }

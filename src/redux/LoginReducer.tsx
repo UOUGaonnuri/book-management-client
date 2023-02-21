@@ -10,7 +10,7 @@ export type LoginStateType = {
 const initialState: LoginStateType = {
     authenticated: false,
     accessToken: null,
-    userName: null
+    userName: null,
 };
 
 const LoginReducer = createReducer(initialState, (builder) => {
