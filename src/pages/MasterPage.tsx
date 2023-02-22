@@ -46,7 +46,7 @@ const MasterPage = () => {
     });
     return (
         <div>
-            <h2 className="m-4">BOOK LIST<button>추가</button></h2>
+            <h2 className="m-4">BOOK LIST<button onClick={()=>goReg("/admin/book/new")}>추가</button></h2>
             <div className="row">{bookList}</div>
         </div>
     )

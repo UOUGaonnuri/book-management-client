@@ -6,6 +6,7 @@ import NotFound from './pages/NotFound'
 import BookPage from './pages/BookPage'
 import MasterPage from './pages/MasterPage'
 import './App.css'
+import AddPage from './pages/AddPage'
 
 const App = () =>{
   return (
@@ -14,7 +15,8 @@ const App = () =>{
         <BrowserRouter>
           <Routes>
             <Route path='/' element={<MainPage/>}></Route>
-            <Route path='/master' element={<MasterPage/>}></Route>
+            <Route path='/admin' element={<MasterPage/>}></Route>
+            <Route path='/admin/book/new' element={<AddPage/>}></Route>
             <Route path='/member/login' element={<LoginPage/>}></Route>
             <Route path='/member/join' element={<RegisterPage/>}></Route>
             <Route path='/book/details/:id' element={<BookPage/>}></Route>
